@@ -1,0 +1,45 @@
+VELAMINIS — site pronto
+
+Abra index.html para entrar no arquivo principal.
+A nova página dos sacerdotes está em sacerdotes.html e já é acessível pela navegação do site.
+
+Estrutura:
+- index.html
+- sacerdotes.html
+- sacerdotes.css
+- sacerdotes.js
+- assets/morgana.png
+- assets/astaroth.png
+- musicas/manipulacao.mp3
+- musicas/medo.mp3
+- musicas/alegria.mp3
+
+As imagens/trilhas de Solidão e Silêncio ficaram marcadas como pendentes, prontas para receber os arquivos depois.
+
+Atualização de nomes: Medo = Astaroth; Solidão = Baal; Silêncio = Belzebu. Volume padrão das trilhas: 35%.
+
+=== REGISTRO COMPARTILHADO ===
+O arquivo membros.html agora usa Supabase para que todos vejam o mesmo registro.
+
+Arquivos alterados/adicionados na RAIZ do site:
+- membros.html
+- membros.css
+- membros.js
+- membros-config.js   (NOVO)
+- supabase-setup.sql  (NOVO; não precisa subir no Neocities, serve para configurar o banco)
+
+CONFIGURAÇÃO:
+1. Crie um projeto no Supabase.
+2. Rode supabase-setup.sql no SQL Editor.
+3. Em Authentication > Users, crie a conta que poderá editar o registro.
+4. Desative cadastro público por e-mail em Authentication > Providers > Email.
+5. Copie Project URL e anon/public key para membros-config.js.
+6. No Neocities, envie membros.html, membros.css, membros.js e membros-config.js para a raiz do site.
+
+Visitantes: leitura apenas.
+Administrador autenticado: adicionar, editar, excluir, importar e migrar registros antigos do localStorage.
+O registro usa Realtime, então alterações aparecem nas páginas abertas sem precisar recarregar.
+
+
+CORREÇÃO DE SINCRONIZAÇÃO:
+Se a conexão estiver configurada mas aparecer “FALHA NA SINCRONIZAÇÃO”, rode supabase-permissoes.sql no SQL Editor do Supabase.

@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0C011F">
+<meta name="description" content="Arquivo interno do Culto Velaminis — as Cinco Ordens, seus sacerdotes, relíquias, contratos e doutrinas.">
+<title>VELAMINIS — Arquivo do Culto</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+:root{
+  --black:#0C011F;
+  --obsidian:#2B0128;
+  --maroon:#6D0122;
+  --crimson:#EC0123;
+  --deep-crimson:#AB0120;
+  --white:#F7E9ED;
+  --muted:#B79AA5;
+  --line:rgba(236,1,35,.20);
+  --glass:rgba(12,1,31,.70);
+  --shadow:0 30px 80px rgba(0,0,0,.45);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(circle at 82% 8%,rgba(236,1,35,.10),transparent 26%),
+    radial-gradient(circle at 18% 76%,rgba(109,1,34,.12),transparent 28%),
+    linear-gradient(180deg,#06010f 0%,#0c011f 55%,#14011a 100%);
+  color:var(--white);
+  font-family:Inter,system-ui,sans-serif;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(circle at 72% 12%,rgba(236,1,35,.06),transparent 30%),
+    radial-gradient(circle at 18% 72%,rgba(109,1,34,.06),transparent 34%),
+    linear-gradient(90deg,transparent 49.92%,rgba(255,255,255,.012) 50%,transparent 50.08%);
+  background-size:auto,auto,120px 120px;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+.container{width:min(1180px,calc(100% - 48px));margin:auto}
+.serif{font-family:Cinzel,Georgia,serif}
+.upper{text-transform:uppercase;letter-spacing:.18em}
+.red{color:var(--crimson)}
+.muted{color:var(--muted)}
+section{position:relative;padding:120px 0}
+.section-kicker{
+  color:var(--crimson);font-size:11px;font-weight:700;letter-spacing:.3em;
+  text-transform:uppercase;margin-bottom:15px;
+}
+.section-title{
+  font-family:Cinzel,Georgia,serif;font-size:clamp(32px,5vw,58px);
+  line-height:1.05;font-weight:600;letter-spacing:-.03em;
+}
+.section-intro{max-width:680px;color:var(--muted);line-height:1.9;margin-top:20px}
+
+/* PRELOADER */
+.preloader{
+  position:fixed;inset:0;background:var(--black);z-index:9999;
+  display:grid;place-items:center;transition:.8s ease;
+}
+.preloader.hide{opacity:0;visibility:hidden}
+.loader{text-align:center}
+.sigillum{
+  width:86px;height:86px;border:1px solid rgba(236,1,35,.45);
+  border-radius:50%;margin:auto;display:grid;place-items:center;position:relative;
+  animation:spin 12s linear infinite;
+}
+.sigillum::before,.sigillum::after{
+  content:"";position:absolute;inset:10px;border:1px solid rgba(236,1,35,.25);
+  transform:rotate(45deg);
+}
+.sigillum::after{inset:22px;transform:rotate(-45deg)}
+.sigillum span{color:var(--crimson);font-family:Cinzel;font-size:24px;animation:counter 12s linear infinite}
+.loader p{margin-top:24px;font-size:10px;letter-spacing:.4em;color:var(--muted);text-transform:uppercase}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes counter{to{transform:rotate(-360deg)}}
+
+/* NAV */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  border-bottom:1px solid transparent;transition:.35s;
+}
+.nav.scrolled{
+  background:rgba(12,1,31,.82);backdrop-filter:blur(18px);
+  border-color:var(--line);
+}
+.nav-inner{height:78px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:13px}
+.brand-mark{
+  width:35px;height:35px;border:1px solid var(--crimson);border-radius:50%;
+  display:grid;place-items:center;color:var(--crimson);font-family:Cinzel;
+}
+.brand-name{font-family:Cinzel;letter-spacing:.18em;font-size:14px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;transition:.25s}
+.nav-links a:hover{color:var(--white)}
+.nav-button{
+  border:1px solid rgba(236,1,35,.45);background:rgba(236,1,35,.08);
+  color:var(--white);padding:10px 16px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  cursor:pointer;
+}
+.menu{display:none;background:none;border:0;color:white;font-size:24px}
+
+/* HERO */
+.hero{min-height:100vh;padding-top:150px;display:flex;align-items:center;overflow:hidden;background:radial-gradient(circle at 82% 20%,rgba(236,1,35,.11),transparent 26%),linear-gradient(180deg,#06010f 0%,#0b0118 58%,#18011d 100%)}
+.hero::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:260px;pointer-events:none;
+  background:linear-gradient(180deg,transparent 0%,rgba(20,1,26,.16) 30%,rgba(31,1,32,.52) 58%,#220120 100%);
+}
+.hero::before{
+  content:"";position:absolute;width:760px;height:760px;border-radius:50%;
+  right:-270px;top:80px;
+  background:radial-gradient(circle,rgba(236,1,35,.18),rgba(171,1,32,.07) 38%,transparent 68%);
+  filter:blur(15px);
+}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center}
+.eyebrow{
+  display:flex;align-items:center;gap:12px;color:var(--crimson);
+  font-size:10px;letter-spacing:.35em;text-transform:uppercase;margin-bottom:25px;
+}
+.eyebrow::before{content:"";width:36px;height:1px;background:var(--crimson)}
+.hero h1{
+  font-family:Cinzel,Georgia,serif;font-size:clamp(65px,10vw,145px);
+  line-height:.78;letter-spacing:-.065em;font-weight:600;
+}
+.hero h1 span{display:block;color:transparent;-webkit-text-stroke:1px rgba(247,233,237,.65)}
+.hero-copy{max-width:600px;margin-top:32px;color:var(--muted);line-height:1.9;font-size:15px}
+.hero-actions{display:flex;gap:12px;margin-top:35px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;padding:14px 21px;
+  border:1px solid rgba(236,1,35,.45);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  transition:.25s;cursor:pointer;background:transparent;color:white;
+}
+.btn.primary{background:var(--crimson);border-color:var(--crimson);color:#18000a}
+.btn:hover{transform:translateY(-2px);box-shadow:0 15px 35px rgba(236,1,35,.16)}
+.hero-seal{height:520px;display:grid;place-items:center;position:relative}
+.seal{
+  width:min(420px,75vw);aspect-ratio:1;border-radius:50%;
+  border:1px solid rgba(236,1,35,.35);position:relative;
+  box-shadow:0 0 100px rgba(236,1,35,.08),inset 0 0 80px rgba(236,1,35,.05);
+  animation:pulse 5s ease-in-out infinite;
+}
+.seal::before,.seal::after{
+  content:"";position:absolute;inset:12%;border:1px solid rgba(236,1,35,.23);
+  transform:rotate(45deg);
+}
+.seal::after{inset:23%;transform:rotate(0)}
+.seal-center{
+  position:absolute;inset:38%;border:1px solid rgba(236,1,35,.55);
+  display:grid;place-items:center;transform:rotate(45deg);
+}
+.seal-center span{transform:rotate(-45deg);font-family:Cinzel;color:var(--crimson);font-size:38px;text-shadow:0 0 14px rgba(236,1,35,.26);animation:orbPulse 4s ease-in-out infinite}
+.orbit{position:absolute;inset:-35px;border:1px dashed rgba(236,1,35,.16);border-radius:50%;animation:spin 25s linear infinite}.orbit-dot,.orbit-dot.small{position:absolute;top:50%;left:50%;border-radius:50%;background:var(--crimson);box-shadow:0 0 18px rgba(236,1,35,.75),0 0 44px rgba(236,1,35,.35)}.orbit-dot{width:12px;height:12px;margin:-6px;animation:sealOrbit 10s linear infinite}.orbit-dot.small{width:8px;height:8px;margin:-4px;background:#7c3cff;box-shadow:0 0 14px rgba(124,60,255,.75),0 0 36px rgba(124,60,255,.35);animation:sealOrbitInner 14s linear infinite reverse}
+@keyframes pulse{50%{transform:scale(1.015);box-shadow:0 0 120px rgba(236,1,35,.12)}}@keyframes orbPulse{50%{transform:rotate(-45deg) scale(1.08)}}@keyframes sealOrbit{from{transform:rotate(0deg) translateX(214px) rotate(0deg)}to{transform:rotate(360deg) translateX(214px) rotate(-360deg)}}@keyframes sealOrbitInner{from{transform:rotate(0deg) translateX(145px) rotate(0deg)}to{transform:rotate(360deg) translateX(145px) rotate(-360deg)}}
+.hero-scroll{
+  position:absolute;bottom:35px;left:50%;transform:translateX(-50%);
+  color:var(--muted);font-size:9px;letter-spacing:.3em;text-transform:uppercase;
+}
+
+/* MANIFESTO */
+.manifesto{background:linear-gradient(180deg,#220120 0%,rgba(43,1,40,.62) 28%,rgba(43,1,40,.28) 64%,transparent 100%)}.manifesto::before{content:"";position:absolute;left:0;right:0;top:-1px;height:160px;pointer-events:none;background:linear-gradient(180deg,rgba(34,1,32,0) 0%,rgba(34,1,32,.78) 100%)}
+.quote{
+  border-left:1px solid var(--crimson);padding:15px 0 15px 32px;
+  max-width:850px;margin:55px auto 0;
+}
+.quote p{font-family:Cinzel;font-size:clamp(24px,4vw,45px);line-height:1.35}
+.quote small{display:block;margin-top:20px;color:var(--muted);font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+
+/* ORDERS */
+.orders-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:55px}
+.order-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.order-card{
+  min-height:360px;padding:28px 22px;position:relative;overflow:hidden;
+  background:linear-gradient(150deg,rgba(43,1,40,.85),rgba(12,1,31,.9));
+  border:1px solid rgba(236,1,35,.13);transition:.4s;cursor:pointer;
+}
+.order-card:hover{transform:translateY(-8px);border-color:rgba(236,1,35,.55);box-shadow:var(--shadow)}
+.order-card::after{
+  content:"";position:absolute;left:-30%;bottom:-45%;width:160%;height:70%;
+  background:radial-gradient(circle,rgba(236,1,35,.14),transparent 65%);transition:.4s;
+}
+.order-card:hover::after{transform:scale(1.3)}
+.order-number{font-family:Cinzel;color:rgba(236,1,35,.55);font-size:12px}
+.order-icon{
+  width:62px;height:62px;border:1px solid rgba(236,1,35,.28);border-radius:50%;
+  display:grid;place-items:center;font-family:Cinzel;color:var(--crimson);
+  margin:55px 0 28px;font-size:20px;
+}
+.order-card h3{font-family:Cinzel;font-size:18px;margin-bottom:12px}
+.order-card p{color:var(--muted);font-size:12px;line-height:1.7}
+.order-tag{position:absolute;bottom:25px;left:22px;font-size:8px;letter-spacing:.2em;color:var(--crimson);text-transform:uppercase}
+
+/* ORDER MODAL */
+.modal{position:fixed;inset:0;background:rgba(5,0,12,.78);backdrop-filter:blur(12px);z-index:800;display:none;place-items:center;padding:20px}
+.modal.open{display:grid}
+.modal-box{
+  width:min(800px,100%);max-height:88vh;overflow:auto;background:var(--black);
+  border:1px solid rgba(236,1,35,.35);box-shadow:var(--shadow);padding:45px;
+  position:relative;
+}
+.modal-close{position:absolute;top:17px;right:18px;background:none;border:0;color:var(--muted);font-size:22px;cursor:pointer}
+.modal-symbol{color:var(--crimson);font-family:Cinzel;font-size:14px;letter-spacing:.2em}
+.modal h2{font-family:Cinzel;font-size:42px;margin:12px 0 10px}
+.modal-sub{color:var(--crimson);font-size:10px;text-transform:uppercase;letter-spacing:.2em}
+.modal p{color:var(--muted);line-height:1.9;margin-top:25px}
+.modal-section{border-top:1px solid rgba(236,1,35,.12);margin-top:30px;padding-top:25px}
+.modal-section h4{font-family:Cinzel;font-size:13px;margin-bottom:10px}
+
+/* HIERARCHY */
+.hierarchy{
+  background:
+    linear-gradient(180deg,
+      var(--black) 0%,
+      #160118 10%,
+      rgba(43,1,40,.78) 22%,
+      var(--obsidian) 42%,
+      var(--obsidian) 78%,
+      rgba(43,1,40,.72) 90%,
+      var(--black) 100%
+    );
+}
+.hierarchy-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:center}
+.hierarchy-list{margin-top:45px;border-top:1px solid var(--line)}
+.rank{
+  display:grid;grid-template-columns:55px 1fr auto;gap:20px;align-items:center;
+  padding:22px 0;border-bottom:1px solid rgba(236,1,35,.11)
+}
+.rank-num{font-family:Cinzel;color:var(--crimson)}
+.rank-name{font-family:Cinzel;font-size:15px}
+.rank-desc{color:var(--muted);font-size:11px;margin-top:5px}
+.rank-badge{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.hierarchy-art{
+  min-height:540px;display:grid;place-items:center;position:relative;
+}
+.pyramid{width:min(430px,80vw);aspect-ratio:1;position:relative;display:grid;place-items:center}
+.pyramid::before,.pyramid::after{content:"";position:absolute;border:1px solid rgba(236,1,35,.22)}
+.pyramid::before{inset:8%;transform:rotate(45deg)}
+.pyramid::after{inset:20%;transform:rotate(45deg)}
+.pyramid-center{text-align:center;position:relative;z-index:2}
+.pyramid-center strong{font-family:Cinzel;color:var(--crimson);font-size:40px;display:block}
+.pyramid-center span{font-size:9px;letter-spacing:.25em;color:var(--muted);text-transform:uppercase}
+
+/* RELICS */
+.relic-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:55px}
+.relic{
+  min-height:300px;padding:26px;background:linear-gradient(160deg,var(--obsidian),rgba(12,1,31,.8));
+  border:1px solid rgba(236,1,35,.13);position:relative;
+}
+.relic::before{content:"";position:absolute;top:0;left:0;width:35px;height:1px;background:var(--crimson)}
+.relic-symbol{font-family:Cinzel;color:var(--crimson);font-size:25px}
+.relic h3{font-family:Cinzel;font-size:16px;margin:35px 0 10px}
+.relic p{font-size:11px;color:var(--muted);line-height:1.8}
+.relic small{position:absolute;bottom:22px;left:26px;color:rgba(247,233,237,.35);font-size:8px;letter-spacing:.18em;text-transform:uppercase}
+
+/* CONTRACTS */
+.contract{
+  background:
+    linear-gradient(180deg,
+      var(--black) 0%,
+      rgba(43,1,40,.82) 18%,
+      var(--obsidian) 42%,
+      rgba(43,1,40,.72) 70%,
+      var(--black) 100%
+    );
+}
+.contract-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:55px}
+.contract-card{
+  padding:38px;border:1px solid rgba(236,1,35,.15);background:rgba(12,1,31,.45);
+}
+.contract-card h3{font-family:Cinzel;font-size:22px;margin-bottom:16px}
+.contract-card p{color:var(--muted);line-height:1.85;font-size:13px}
+.contract-rule{display:flex;gap:15px;margin-top:25px;padding-top:20px;border-top:1px solid rgba(236,1,35,.1)}
+.contract-rule b{color:var(--crimson);font-family:Cinzel}
+.contract-rule span{font-size:11px;color:var(--muted);line-height:1.7}
+
+/* PRIESTS */
+.priest-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-top:55px}
+.priest{
+  display:grid;grid-template-columns:95px 1fr;gap:24px;align-items:center;
+  padding:24px;border:1px solid rgba(236,1,35,.12);background:rgba(43,1,40,.42);
+}
+.priest-mark{
+  width:75px;height:75px;border:1px solid rgba(236,1,35,.3);border-radius:50%;
+  display:grid;place-items:center;color:var(--crimson);font-family:Cinzel;font-size:22px;
+}
+.priest h3{font-family:Cinzel;font-size:17px}
+.priest .role{font-size:9px;color:var(--crimson);text-transform:uppercase;letter-spacing:.16em;margin:7px 0}
+.priest p{font-size:11px;color:var(--muted);line-height:1.7}
+
+/* ARCHIVE */
+.archive{
+  background:
+    linear-gradient(180deg,
+      var(--black) 0%,
+      rgba(43,1,40,.78) 20%,
+      var(--obsidian) 48%,
+      rgba(43,1,40,.86) 82%,
+      #160118 94%,
+      var(--black) 100%
+    );
+}
+.archive-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-top:55px}
+.archive-main,.archive-side{border:1px solid rgba(236,1,35,.13);padding:35px;background:rgba(12,1,31,.55)}
+.archive-main h3,.archive-side h3{font-family:Cinzel;font-size:20px}
+.file-list{margin-top:25px}
+.file{
+  display:flex;justify-content:space-between;gap:20px;padding:18px 0;
+  border-bottom:1px solid rgba(236,1,35,.1);font-size:11px
+}
+.file span:last-child{color:var(--crimson);font-size:9px;letter-spacing:.14em}
+.warning{
+  margin-top:25px;padding:18px;border:1px solid rgba(236,1,35,.3);
+  background:rgba(236,1,35,.045);color:var(--muted);font-size:10px;line-height:1.7;
+}
+.warning strong{color:var(--crimson)}
+
+/* FOOTER */
+footer{padding:70px 0 35px;border-top:1px solid rgba(236,1,35,.13)}
+.footer-top{display:flex;justify-content:space-between;gap:40px}
+.footer-brand h2{font-family:Cinzel;font-size:28px}
+.footer-brand p{max-width:430px;color:var(--muted);font-size:11px;line-height:1.8;margin-top:12px}
+.footer-links{display:flex;gap:35px}
+.footer-links div{display:flex;flex-direction:column;gap:10px}
+.footer-links b{font-size:9px;color:var(--crimson);letter-spacing:.18em;text-transform:uppercase}
+.footer-links a{font-size:10px;color:var(--muted)}
+.footer-bottom{margin-top:55px;padding-top:20px;border-top:1px solid rgba(236,1,35,.1);display:flex;justify-content:space-between;color:rgba(183,154,165,.55);font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* RESPONSIVE */
+
+.hierarchy-register{
+  margin-top:28px;
+  min-height:116px;
+  border:1px solid rgba(236,1,35,.22);
+  background:linear-gradient(135deg,rgba(236,1,35,.055),rgba(255,255,255,.012));
+  display:grid;
+  grid-template-columns:50px 1fr auto;
+  gap:18px;
+  align-items:center;
+  padding:20px;
+  transition:.25s ease;
+}
+.hierarchy-register:hover{border-color:rgba(236,1,35,.6);transform:translateY(-2px);background:linear-gradient(135deg,rgba(236,1,35,.09),rgba(255,255,255,.018))}
+.registry-icon{width:42px;height:42px;border:1px solid rgba(236,1,35,.35);display:grid;place-items:center;color:var(--crimson);font-size:20px}
+.hierarchy-register small{display:block;font:500 8px/1 var(--mono);letter-spacing:.16em;color:var(--crimson);margin-bottom:8px}
+.hierarchy-register strong{display:block;font:500 17px/1.2 var(--serif);color:var(--white);margin-bottom:5px}
+.hierarchy-register span{display:block;max-width:600px;font-size:11px;line-height:1.55;color:var(--muted)}
+.hierarchy-register>b{font:500 8px/1 var(--mono);letter-spacing:.13em;color:#b998aa;white-space:nowrap}
+@media(max-width:1050px){
+  .order-grid,.relic-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-grid,.hierarchy-grid,.archive-grid{grid-template-columns:1fr}
+  .hero-seal{height:420px}
+}
+@media(max-width:760px){
+  .hierarchy-register{grid-template-columns:44px 1fr}
+  .hierarchy-register>b{grid-column:2}
+
+  .container{width:min(100% - 30px,1180px)}
+  section{padding:85px 0}
+  .nav-links,.nav-button{display:none}
+  .menu{display:block}
+  .nav-links.open{
+    display:flex;position:absolute;top:78px;left:0;right:0;padding:25px;
+    background:rgba(12,1,31,.96);flex-direction:column;align-items:flex-start;border-bottom:1px solid var(--line)
+  }
+  .hero{padding-top:120px}
+  .hero-grid{gap:25px}
+  .hero h1{font-size:70px}
+  .hero-seal{height:320px}
+  .orders-head{display:block}
+  .order-grid,.relic-grid,.priest-grid,.contract-grid{grid-template-columns:1fr}
+  .modal-box{padding:30px 22px}
+  .modal h2{font-size:32px}
+  .priest{grid-template-columns:70px 1fr}
+  .priest-mark{width:60px;height:60px}
+  .footer-top,.footer-bottom{flex-direction:column}
+  .footer-links{flex-wrap:wrap}
+}
+</style>
+</head>
+
+<body>
+
+<div class="preloader" id="preloader">
+  <div class="loader">
+    <div class="sigillum"><span>V</span></div>
+    <p>O arquivo está sendo aberto</p>
+  </div>
+</div>
+
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="#inicio">
+      <div class="brand-mark">V</div>
+      <div class="brand-name">VELAMINIS</div>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#doutrina">Doutrina</a>
+      <a href="#ordens">As Cinco Ordens</a>
+      <a href="#hierarquia">Hierarquia</a>
+      <a href="membros.html">Registro</a>
+      <a href="#reliquias">Relíquias</a>
+      <a href="sacerdotes.html">Sacerdotes</a>
+      <a href="#arquivo">Arquivo</a>
+    </div>
+    <a class="nav-button" href="#arquivo">Acesso interno</a>
+    <button class="menu" id="menuBtn">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="hero" id="inicio">
+  <div class="container hero-grid">
+    <div class="reveal">
+      <div class="eyebrow">Arquivo interno · Velaminis</div>
+      <h1>VELA<span>MINIS</span></h1>
+      <p class="hero-copy">
+        Um culto sustentado por cinco ordens, cinco propósitos e uma única certeza:
+        aquilo que é feito dentro de suas paredes sempre deixa uma consequência.
+        Este é o registro de suas estruturas, sacerdotes, relíquias, pactos e mistérios.
+      </p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#ordens">Conhecer as Ordens</a>
+        <a class="btn" href="#doutrina">Ler a doutrina</a>
+        <a class="btn" href="sacerdotes.html">Dossiês dos Sacerdotes</a>
+      </div>
+    </div>
+
+    <div class="hero-seal reveal">
+      <div class="seal">
+        <div class="orbit"></div>
+        <div class="orbit-dot"></div><div class="orbit-dot small"></div>
+        <div class="seal-center"><span>V</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">desça · o arquivo continua</div>
+</section>
+
+<section class="manifesto" id="doutrina">
+  <div class="container">
+    <div class="section-kicker reveal">I · Doutrina</div>
+    <h2 class="section-title reveal">Cinco caminhos.<br><span class="red">Uma só vontade.</span></h2>
+    <p class="section-intro reveal">
+      O Velaminis não existe como uma massa uniforme. Cada Ordem possui uma função,
+      uma filosofia e uma forma própria de servir ao culto. Seus membros podem ser
+      completamente diferentes entre si, mas todos fazem parte da mesma engrenagem.
+    </p>
+
+    <div class="quote reveal">
+      <p>“Toda escolha deixa algo para trás. Toda promessa cria uma obrigação. Toda verdade possui um preço.”</p>
+      <small>— Fragmento atribuído ao Conselho Sagrado</small>
+    </div>
+  </div>
+</section>
+
+<section id="ordens">
+  <div class="container">
+    <div class="orders-head">
+      <div>
+        <div class="section-kicker reveal">II · Estrutura interna</div>
+        <h2 class="section-title reveal">As Cinco Ordens</h2>
+      </div>
+      <p class="section-intro reveal" style="margin:0;max-width:430px">
+        Toque em uma Ordem para abrir seu registro interno.
+      </p>
+    </div>
+
+    <div class="order-grid">
+      <article class="order-card reveal" data-order="solidão">
+        <div class="order-number">01</div>
+        <div class="order-icon">S</div>
+        <h3>Solidão</h3>
+        <p>Observação, reconhecimento, inteligência e estratégia. A Ordem que encontra o que os outros não percebem.</p>
+        <div class="order-tag">Ordo Solitudinis</div>
+      </article>
+
+      <article class="order-card reveal" data-order="medo">
+        <div class="order-number">02</div>
+        <div class="order-icon">M</div>
+        <h3>Medo</h3>
+        <p>Consequência e incerteza. A mão do culto, responsável por pactos, favores, trabalhos e aquilo que vem depois.</p>
+        <div class="order-tag">Consequência · Incerteza</div>
+      </article>
+
+      <article class="order-card reveal" data-order="manipulacao">
+        <div class="order-number">03</div>
+        <div class="order-icon">D</div>
+        <h3>Manipulação</h3>
+        <p>Influência, diplomacia e controle. O rosto que o culto apresenta quando palavras valem mais que força.</p>
+        <div class="order-tag">Ordo Dolus</div>
+      </article>
+
+      <article class="order-card reveal" data-order="alegria">
+        <div class="order-number">04</div>
+        <div class="order-icon">L</div>
+        <h3>Alegria</h3>
+        <p>Recrutamento, celebração e aproximação. A porta que parece acolhedora antes que alguém descubra o que existe além dela.</p>
+        <div class="order-tag">Ordo Laetitiae</div>
+      </article>
+
+      <article class="order-card reveal" data-order="silencio">
+        <div class="order-number">05</div>
+        <div class="order-icon">T</div>
+        <h3>Silêncio</h3>
+        <p>Justiça, julgamento e execução de decisões. Onde a palavra termina, o silêncio decide.</p>
+        <div class="order-tag">Ordo Timoris</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="hierarchy" id="hierarquia">
+  <div class="container hierarchy-grid">
+    <div>
+      <div class="section-kicker reveal">III · Hierarquia</div>
+      <h2 class="section-title reveal">O Conselho<br><span class="red">Sagrado</span></h2>
+      <p class="section-intro reveal">
+        O culto não é governado por uma única voz. Os sacerdotes das cinco Ordens
+        formam o núcleo de autoridade conhecido como Conselho Sagrado. Cada um responde
+        pela sua Ordem e, juntos, sustentam o equilíbrio interno do Velaminis.
+      </p>
+
+      <div class="hierarchy-list">
+        <div class="rank reveal">
+          <div class="rank-num">I</div>
+          <div><div class="rank-name">Sacerdotes</div><div class="rank-desc">Autoridade máxima de cada Ordem.</div></div>
+          <div class="rank-badge">Conselho Sagrado</div>
+        </div>
+        <div class="rank reveal">
+          <div class="rank-num">II</div>
+          <div><div class="rank-name">Oficiais e investigadores</div><div class="rank-desc">Membros de alta confiança e função especializada.</div></div>
+          <div class="rank-badge">Alta patente</div>
+        </div>
+        <div class="rank reveal">
+          <div class="rank-num">III</div>
+          <div><div class="rank-name">Membros da Ordem</div><div class="rank-desc">Agentes, executores, estudiosos e servidores.</div></div>
+          <div class="rank-badge">Ordem</div>
+        </div>
+        <div class="rank reveal">
+          <div class="rank-num">IV</div>
+          <div><div class="rank-name">Iniciados</div><div class="rank-desc">Aqueles que ainda estão sendo testados.</div></div>
+          <div class="rank-badge">Primeiro círculo</div>
+        </div>
+      </div>
+
+      <a class="hierarchy-register reveal" href="membros.html">
+        <div class="registry-icon">↳</div>
+        <div>
+          <small>REGISTRO DE PRESENÇA</small>
+          <strong>Entradas, saídas e candidatos</strong>
+          <span>Abra o livro da hierarquia para adicionar, atualizar ou retirar membros e acompanhar a contagem atual do culto.</span>
+        </div>
+        <b>ABRIR →</b>
+      </a>
+    </div>
+
+    <div class="hierarchy-art reveal">
+      <div class="pyramid">
+        <div class="pyramid-center">
+          <strong>V</strong>
+          <span>Conselho Sagrado</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reliquias">
+  <div class="container">
+    <div class="section-kicker reveal">IV · Relicário</div>
+    <h2 class="section-title reveal">As Relíquias dos Sacerdotes</h2>
+    <p class="section-intro reveal">
+      Cada sacerdote possui uma relíquia única. Elas não são simples armas:
+      são desafios impostos pela própria entidade da Ordem. O vínculo pertence ao
+      sacerdote e termina com ele.
+    </p>
+
+    <div class="relic-grid">
+      <article class="relic reveal">
+        <div class="relic-symbol">◈</div>
+        <h3>Manto da Meia-Noite</h3>
+        <p>Relíquia da Solidão. Ligada ao abismo, à sobrevivência e àquilo que o sacerdote precisou enfrentar longe de qualquer testemunha.</p>
+        <small>Ordem da Solidão</small>
+      </article>
+
+      <article class="relic reveal">
+        <div class="relic-symbol">†</div>
+        <h3>Ceifadora dos Juramentos</h3>
+        <p>A arma da Ordem do Medo. Não representa simplesmente uma dívida, mas a consequência inevitável de uma promessa quebrada.</p>
+        <small>Ordem do Medo</small>
+      </article>
+
+      <article class="relic reveal">
+        <div class="relic-symbol">◎</div>
+        <h3>Medalhão Sagrado</h3>
+        <p>Relíquia da Manipulação. Um símbolo de influência, identidade e da capacidade de mudar o rumo de uma conversa sem levantar uma arma.</p>
+        <small>Ordem da Manipulação</small>
+      </article>
+
+      <article class="relic reveal">
+        <div class="relic-symbol">✦</div>
+        <h3>Doce Eterno</h3>
+        <p>Relíquia da Alegria. Uma dádiva que transforma celebração em símbolo de permanência e vínculo.</p>
+        <small>Ordem da Alegria</small>
+      </article>
+
+      <article class="relic reveal">
+        <div class="relic-symbol">☽</div>
+        <h3>Wickpiercer</h3>
+        <p>Relíquia do Silêncio. A lâmina que acompanha a justiça quando já não existe nada a ser dito.</p>
+        <small>Ordem do Silêncio</small>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contract" id="contratos">
+  <div class="container">
+    <div class="section-kicker reveal">V · A mão do culto</div>
+    <h2 class="section-title reveal">A Ordem do Medo</h2>
+    <p class="section-intro reveal">
+      A Ordem do Medo não é apenas sobre temer. É sobre não saber qual consequência
+      aguarda alguém depois de uma escolha. Eles fazem pactos, favores e trabalhos
+      para membros do culto e para aqueles que estão do lado de fora.
+    </p>
+
+    <div class="contract-grid">
+      <article class="contract-card reveal">
+        <h3>O acordo</h3>
+        <p>
+          Um acordo não é medido apenas pelo que foi pedido. O valor real está no risco,
+          nas consequências e nos problemas que a decisão cria. Quanto maior o dano causado,
+          maior pode ser a cobrança.
+        </p>
+        <div class="contract-rule"><b>01</b><span>O que foi prometido deve ser cumprido.</span></div>
+        <div class="contract-rule"><b>02</b><span>O que foi omitido pode alterar completamente o preço.</span></div>
+      </article>
+
+      <article class="contract-card reveal">
+        <h3>A consequência</h3>
+        <p>
+          Para quem está fora do culto, a Ordem pode parecer uma última oportunidade.
+          Para quem pertence ao Velaminis, quebrar um acordo é ainda mais grave:
+          a própria confiança interna está em jogo.
+        </p>
+        <div class="contract-rule"><b>03</b><span>A cobrança não precisa equivaler ao pedido; ela pode equivaler ao problema causado.</span></div>
+        <div class="contract-rule"><b>04</b><span>O medo nasce quando ninguém sabe exatamente o que será cobrado.</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="sacerdotes">
+  <div class="container">
+    <div class="section-kicker reveal">VI · O Conselho</div>
+    <h2 class="section-title reveal">Os Sacerdotes</h2>
+    <p class="section-intro reveal">
+      Cinco posições. Cinco especialidades. Cinco pessoas escolhidas não apenas por poder,
+      mas por aquilo que sabem fazer melhor e pelo quanto isso serve à sua Ordem.
+    </p>
+
+    <div class="priest-grid">
+      <article class="priest reveal">
+        <div class="priest-mark">A</div>
+        <div><h3>Baal</h3><div class="role">Sacerdote · Solidão</div><p>Curioso, observador e obsessivo por mistérios. Um investigador que prefere conhecer o mundo sem permitir que o mundo o conheça.</p></div>
+      </article>
+
+      <article class="priest reveal">
+        <div class="priest-mark">O</div>
+        <div><h3>Astaroth</h3><div class="role">Sacerdote · Medo</div><p>Perspicaz, obstinado e excelente investigador. Aprendeu a transformar medo em informação e incerteza em consequência.</p></div>
+      </article>
+
+      <article class="priest reveal">
+        <div class="priest-mark">M</div>
+        <div><h3>Morgana</h3><div class="role">Sacerdotisa · Manipulação</div><p>A primeira voz da Manipulação. Precisa, paciente e impossível de reduzir a uma única versão.</p></div>
+      </article>
+
+      <article class="priest reveal">
+        <div class="priest-mark">C</div>
+        <div><h3>Caramela</h3><div class="role">Sacerdotisa · Alegria</div><p>A última sacerdotisa da Alegria. Extrovertida, caótica e capaz de encontrar uma brecha de leveza mesmo dentro das situações mais graves.</p></div>
+      </article>
+
+      <article class="priest reveal">
+        <div class="priest-mark">L</div>
+        <div><h3>Belzebu</h3><div class="role">Sacerdote · Silêncio</div><p>A Pura. Julga sem pressa, separa ruído de evidência e transforma equidade em sentença.</p></div>
+      </article>
+    </div>
+
+    <div class="reveal" style="margin-top:34px;display:flex;justify-content:center">
+      <a class="btn primary" href="sacerdotes.html">Abrir dossiês completos dos sacerdotes</a>
+    </div>
+  </div>
+</section>
+
+<section class="archive" id="arquivo">
+  <div class="container">
+    <div class="section-kicker reveal">VII · Arquivo interno</div>
+    <h2 class="section-title reveal">Documentos classificados</h2>
+    <p class="section-intro reveal">
+      Nem toda história deve ser contada em voz alta. Alguns registros existem apenas
+      para quem possui autorização para lê-los.
+    </p>
+
+    <div class="archive-grid">
+      <div class="archive-main reveal">
+        <h3>Índice do arquivo</h3>
+        <div class="file-list">
+          <div class="file"><span>01 · Origem do Velaminis</span><span>RESTRITO</span></div>
+          <div class="file"><span>02 · Entidades e vínculos</span><span>CLASSIFICADO</span></div>
+          <div class="file"><span>03 · Conselho Sagrado</span><span>INTERNO</span></div>
+          <div class="file"><span>04 · Relíquias sacerdotais</span><span>RESTRITO</span></div>
+          <div class="file"><span>05 · Contratos e pactos</span><span>ALTO RISCO</span></div>
+          <div class="file"><span>06 · Missões e ocorrências</span><span>CONFIDENCIAL</span></div>
+        </div>
+      </div>
+
+      <div class="archive-side reveal">
+        <h3>Nota do arquivo</h3>
+        <p style="color:var(--muted);font-size:12px;line-height:1.9;margin-top:18px">
+          Este registro não representa a totalidade do culto. Informações consideradas
+          perigosas foram removidas ou ocultadas.
+        </p>
+        <div class="warning">
+          <strong>AVISO:</strong> a leitura de documentos sem autorização pode ser considerada
+          quebra de confiança com o Conselho Sagrado.
+        </div>
+        <a href="#inicio" class="btn" style="margin-top:25px">Retornar ao início</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h2>VELAMINIS</h2>
+        <p>Arquivo interno do culto. Cinco ordens, um conselho e incontáveis consequências.</p>
+      </div>
+      <div class="footer-links">
+        <div><b>Navegação</b><a href="#doutrina">Doutrina</a><a href="#ordens">Ordens</a><a href="#hierarquia">Hierarquia</a></div>
+        <div><b>Registros</b><a href="membros.html">Registro de Membros</a><a href="#reliquias">Relíquias</a><a href="sacerdotes.html">Dossiês dos Sacerdotes</a><a href="#arquivo">Arquivo</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Arquivo nº VLM-0001</span>
+      <span>© Velaminis · Conselho Sagrado</span>
+    </div>
+  </div>
+</footer>
+
+<div class="modal" id="orderModal">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose">×</button>
+    <div class="modal-symbol" id="modalSymbol">ORDEM</div>
+    <h2 id="modalTitle">Ordem</h2>
+    <div class="modal-sub" id="modalSub">Registro</div>
+    <p id="modalText"></p>
+    <div class="modal-section">
+      <h4>Função dentro do culto</h4>
+      <p id="modalFunction"></p>
+    </div>
+    <div class="modal-section">
+      <h4>Princípio</h4>
+      <p id="modalPrinciple"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+const orders = {
+  "solidão":{
+    symbol:"01 · ORDO SOLITUDINIS",title:"Ordem da Solidão",sub:"Reconhecimento · Inteligência · Estratégia",
+    text:"A Ordem da Solidão existe para observar aquilo que passa despercebido. Seus membros investigam, reconhecem padrões, acompanham movimentos e constroem estratégias a partir de informações que outros considerariam irrelevantes.",
+    function:"Reconhecimento de territórios, inteligência, investigação, coleta de informações e planejamento.",
+    principle:"Ver antes dos outros. Entender antes de agir. Conhecer sem necessariamente ser conhecido."
+  },
+  "medo":{
+    symbol:"02 · ORDEM DO MEDO",title:"Ordem do Medo",sub:"Consequência · Incerteza · Pactos",
+    text:"A Ordem do Medo é a mão do culto. Seus membros fazem pactos, favores e trabalhos tanto para pessoas de fora quanto para integrantes do Velaminis. Sua força está na consequência: ninguém sabe exatamente o que será cobrado quando um acordo é quebrado.",
+    function:"Contratos, cobranças, favores, investigação de consequências, resolução de problemas e trabalhos que exigem discrição.",
+    principle:"Não é necessário saber o que acontecerá para ter medo. Basta saber que algo acontecerá."
+  },
+  "manipulacao":{
+    symbol:"03 · ORDO DOLUS",title:"Ordem da Manipulação",sub:"Influência · Diplomacia · Controle",
+    text:"A Ordem da Manipulação representa o rosto do culto. Seus membros lidam com relações, negociações, diplomacia e influência. Nem toda batalha precisa ser vencida pela força quando uma palavra bem escolhida pode mudar o resultado.",
+    function:"Diplomacia, negociação, representação, influência e controle de situações sociais.",
+    principle:"A melhor decisão é aquela que o outro acredita ter tomado sozinho."
+  },
+  "alegria":{
+    symbol:"04 · ORDO LAETITIAE",title:"Ordem da Alegria",sub:"Recrutamento · Celebração · Aproximação",
+    text:"A Ordem da Alegria aproxima pessoas do culto. Ela recebe, celebra, cria vínculos e transforma desconhecidos em possíveis aliados. Sua aparência acolhedora esconde uma das funções mais importantes do Velaminis.",
+    function:"Recrutamento, integração, eventos, aproximação de comunidades e construção de vínculos.",
+    principle:"Nem toda porta precisa parecer perigosa para levar ao mesmo lugar."
+  },
+  "silencio":{
+    symbol:"05 · ORDEM DO SILÊNCIO",title:"Ordem do Silêncio",sub:"Justiça · Julgamento · Execução",
+    text:"A Ordem do Silêncio representa a justiça interna do culto. Quando uma decisão precisa ser cumprida, eles são aqueles que fazem o necessário sem precisar explicar o que já foi decidido.",
+    function:"Julgamentos, aplicação de decisões, proteção de segredos e execução das determinações do Conselho.",
+    principle:"Quando a decisão é tomada, não há necessidade de mais palavras."
+  }
+};
+
+document.querySelectorAll(".order-card").forEach(card=>{
+  card.addEventListener("click",()=>{
+    const data=orders[card.dataset.order];
+    document.getElementById("modalSymbol").textContent=data.symbol;
+    document.getElementById("modalTitle").textContent=data.title;
+    document.getElementById("modalSub").textContent=data.sub;
+    document.getElementById("modalText").textContent=data.text;
+    document.getElementById("modalFunction").textContent=data.function;
+    document.getElementById("modalPrinciple").textContent=data.principle;
+    document.getElementById("orderModal").classList.add("open");
+  });
+});
+
+document.getElementById("modalClose").onclick=()=>document.getElementById("orderModal").classList.remove("open");
+document.getElementById("orderModal").addEventListener("click",e=>{
+  if(e.target.id==="orderModal") document.getElementById("orderModal").classList.remove("open");
+});
+
+window.addEventListener("keydown",e=>{
+  if(e.key==="Escape") document.getElementById("orderModal").classList.remove("open");
+});
+
+const nav=document.getElementById("nav");
+window.addEventListener("scroll",()=>nav.classList.toggle("scrolled",window.scrollY>30));
+
+const menuBtn=document.getElementById("menuBtn");
+const navLinks=document.getElementById("navLinks");
+menuBtn.addEventListener("click",()=>navLinks.classList.toggle("open"));
+navLinks.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>navLinks.classList.remove("open")));
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) entry.target.classList.add("visible");
+  });
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+window.addEventListener("load",()=>{
+  setTimeout(()=>document.getElementById("preloader").classList.add("hide"),700);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Registro interno de membros do Culto Velaminis.">
+  <title>Velaminis — Registro de Membros</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="membros.css">
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html"><span>V</span> VELAMINIS</a>
+    <nav>
+      <a href="index.html#hierarquia">← HIERARQUIA</a>
+      <a href="sacerdotes.html">SACERDOTES</a>
+      <a class="active" href="membros.html">REGISTRO</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">III-B · Hierarquia · Registro de Presença</div>
+        <h1>ENTRADAS,<br><span>SAÍDAS</span><br>E ESPERA.</h1>
+        <p>
+          Este arquivo acompanha a movimentação interna do Velaminis. Quem permanece, quem deixou o culto e quem ainda aguarda autorização para cruzar o primeiro círculo.
+        </p>
+        <div class="hero-actions">
+          <button class="btn primary admin-only hidden" id="openFormBtn">+ NOVO REGISTRO</button>
+          <button class="btn" id="exportBtn">EXPORTAR DADOS</button>
+          <label class="btn file-btn admin-only hidden">IMPORTAR DADOS<input id="importInput" type="file" accept="application/json"></label>
+          <button class="btn admin-only hidden" id="migrateLocalBtn">MIGRAR REGISTRO LOCAL</button>
+          <button class="btn" id="adminLoginBtn">ENTRAR COMO ADMIN</button>
+          <button class="btn hidden" id="adminLogoutBtn">SAIR DO ADMIN</button>
+        </div>
+        <div class="sync-strip" id="syncStrip" data-state="loading">
+          <span class="sync-dot"></span>
+          <b id="syncTitle">CONECTANDO AO REGISTRO CENTRAL</b>
+          <small id="syncDetail">aguarde...</small>
+        </div>
+      </div>
+
+      <div class="registry-seal" aria-hidden="true">
+        <div class="seal-ring ring-one"></div>
+        <div class="seal-ring ring-two"></div>
+        <div class="seal-square"></div>
+        <b>V</b>
+        <span>REGISTRO INTERNO</span>
+      </div>
+    </section>
+
+    <section class="summary">
+      <div class="summary-heading">
+        <div>
+          <small>CONTAGEM ATUAL</small>
+          <h2>Estado do Culto</h2>
+        </div>
+        <p id="lastUpdate">Nenhuma alteração registrada.</p>
+      </div>
+
+      <div class="counter-grid">
+        <article class="counter active-count">
+          <span class="counter-index">01</span>
+          <div><strong id="countActive">0</strong><p>NO CULTO</p></div>
+          <i>presenças confirmadas</i>
+        </article>
+        <article class="counter waiting-count">
+          <span class="counter-index">02</span>
+          <div><strong id="countWaiting">0</strong><p>PARA ENTRAR</p></div>
+          <i>aguardando decisão</i>
+        </article>
+        <article class="counter left-count">
+          <span class="counter-index">03</span>
+          <div><strong id="countLeft">0</strong><p>SAÍRAM</p></div>
+          <i>registros preservados</i>
+        </article>
+        <article class="counter total-count">
+          <span class="counter-index">Σ</span>
+          <div><strong id="countTotal">0</strong><p>TOTAL REGISTRADO</p></div>
+          <i>histórico completo</i>
+        </article>
+      </div>
+    </section>
+
+    <section class="registry">
+      <div class="registry-head">
+        <div>
+          <small>LIVRO DE MEMBROS</small>
+          <h2>Registro de Movimentação</h2>
+        </div>
+        <div class="filters">
+          <input id="searchInput" type="search" placeholder="Buscar nome, ordem ou patente..." autocomplete="off">
+          <select id="statusFilter">
+            <option value="all">Todos os estados</option>
+            <option value="ativo">No culto</option>
+            <option value="espera">Para entrar</option>
+            <option value="saiu">Saiu</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-shell">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Ordem</th>
+              <th>Patente</th>
+              <th>Estado</th>
+              <th>Entrada</th>
+              <th>Saída</th>
+              <th>Observação</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="memberRows"></tbody>
+        </table>
+        <div class="empty-state" id="emptyState">
+          <div class="empty-mark">V</div>
+          <h3>Nenhum nome foi inscrito.</h3>
+          <p>Use “Novo Registro” para iniciar o livro de membros.</p>
+          <button class="btn primary admin-only hidden" id="emptyAddBtn">CRIAR PRIMEIRO REGISTRO</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="movement-log">
+      <div class="log-head">
+        <div>
+          <small>HISTÓRICO</small>
+          <h2>Últimas Movimentações</h2>
+        </div>
+        <span>As alterações são sincronizadas no registro central do culto.</span>
+      </div>
+      <div class="log-list" id="logList"></div>
+    </section>
+  </main>
+
+  <div class="modal" id="memberModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <form class="modal-card" id="memberForm">
+      <button class="modal-close" type="button" data-close-modal>×</button>
+      <div class="modal-title">
+        <small>REGISTRO INTERNO</small>
+        <h2 id="formTitle">Novo Membro</h2>
+        <p>Altere o estado sempre que alguém entrar, sair ou retornar à espera.</p>
+      </div>
+
+      <input type="hidden" id="memberId">
+
+      <div class="form-grid">
+        <label class="field wide">
+          <span>Nome / identificação</span>
+          <input id="nameInput" required maxlength="80" placeholder="Nome do membro">
+        </label>
+
+        <label class="field">
+          <span>Ordem</span>
+          <select id="orderInput">
+            <option value="Não definida">Não definida</option>
+            <option value="Manipulação">Manipulação</option>
+            <option value="Medo">Medo</option>
+            <option value="Alegria">Alegria</option>
+            <option value="Solidão">Solidão</option>
+            <option value="Silêncio">Silêncio</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Patente</span>
+          <select id="rankInput">
+            <option value="Iniciado">Iniciado</option>
+            <option value="Membro da Ordem">Membro da Ordem</option>
+            <option value="Oficial / Investigador">Oficial / Investigador</option>
+            <option value="Sacerdote">Sacerdote</option>
+            <option value="Outra">Outra</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Estado</span>
+          <select id="statusInput">
+            <option value="ativo">No culto</option>
+            <option value="espera">Para entrar</option>
+            <option value="saiu">Saiu</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Data de entrada</span>
+          <input id="entryDateInput" type="date">
+        </label>
+
+        <label class="field">
+          <span>Data de saída</span>
+          <input id="exitDateInput" type="date">
+        </label>
+
+        <label class="field wide">
+          <span>Observação</span>
+          <textarea id="notesInput" maxlength="300" rows="4" placeholder="Função, motivo da saída, situação do ingresso ou qualquer observação relevante."></textarea>
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn danger hidden" type="button" id="deleteBtn">EXCLUIR REGISTRO</button>
+        <div class="grow"></div>
+        <button class="btn" type="button" data-close-modal>CANCELAR</button>
+        <button class="btn primary" type="submit">SALVAR REGISTRO</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal" id="adminModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-admin></div>
+    <form class="modal-card admin-card" id="adminForm">
+      <button class="modal-close" type="button" data-close-admin>×</button>
+      <div class="modal-title">
+        <small>ACESSO RESTRITO</small>
+        <h2>Administrador</h2>
+        <p>Visitantes podem consultar o livro. Apenas uma conta autorizada pode adicionar, editar ou remover registros.</p>
+      </div>
+      <div class="form-grid admin-login-grid">
+        <label class="field wide">
+          <span>E-mail</span>
+          <input id="adminEmail" type="email" autocomplete="username" required placeholder="seu@email.com">
+        </label>
+        <label class="field wide">
+          <span>Senha</span>
+          <input id="adminPassword" type="password" autocomplete="current-password" required placeholder="••••••••">
+        </label>
+      </div>
+      <p class="admin-error" id="adminError"></p>
+      <div class="form-actions">
+        <div class="grow"></div>
+        <button class="btn" type="button" data-close-admin>CANCELAR</button>
+        <button class="btn primary" type="submit">ENTRAR</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+    // Conexão pública do projeto Velaminis. A publishable key pode ficar no navegador.
+    window.VELAMINIS_SUPABASE = {
+      url: "https://eptfwijbvtcsyrzycumu.supabase.co",
+      anonKey: "sb_publishable_RoX-rSWoRbk3nJOuKcMZUw_b-E5jQmJ"
+    };
+  </script>
+  <script src="membros.js?v=4"></script>
+</body>
+</html>

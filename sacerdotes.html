@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09010f">
+  <meta name="description" content="Dossiês visuais dos cinco sacerdotes do Culto Velaminis.">
+  <title>VELAMINIS — Dossiês dos Sacerdotes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="sacerdotes.css">
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <header class="topnav">
+    <a class="wordmark" href="index.html"><span>V</span> VELAMINIS</a>
+    <nav>
+      <a href="index.html">← Arquivo</a>
+      <a href="#manipulacao">Manipulação</a>
+      <a href="#medo">Medo</a>
+      <a href="#alegria">Alegria</a>
+      <a href="#solidao">Solidão</a>
+      <a href="#silencio">Silêncio</a>
+      <a href="membros.html">Registro</a>
+    </nav>
+    <button class="sound-master" id="soundMaster" type="button">SOM · ON</button>
+  </header>
+
+  <main>
+    <section class="intro" id="topo">
+      <div class="intro-copy reveal">
+        <div class="eyebrow"><span></span> arquivo interno · conselho sagrado</div>
+        <h1>OS CINCO<br><i>NO CENTRO</i></h1>
+        <p>Não são cinco fichas iguais. Cada sacerdote altera o próprio arquivo. A página muda de linguagem, ritmo e cor conforme a Ordem — como se o registro tivesse sido contaminado por quem descreve.</p>
+        <div class="intro-actions">
+          <a href="#manipulacao" class="enter">INICIAR LEITURA</a>
+          <span>05 registros / 03 imagens liberadas / 04 trilhas anexadas</span>
+        </div>
+      </div>
+      <div class="pentacle reveal" aria-hidden="true">
+        <div class="ring r1"></div><div class="ring r2"></div><div class="diamond d1"></div><div class="diamond d2"></div>
+        <div class="orbiting-orb orb-a"></div><div class="orbiting-orb orb-b"></div>
+        <b>V</b><small>CONSELHO SAGRADO</small>
+      </div>
+    </section>
+
+    <!-- 01 MANIPULAÇÃO -->
+    <section class="priest priest--manip" id="manipulacao" data-accent="#2e66ff">
+      <div class="section-index">01 / 05</div>
+      <div class="manip-board reveal">
+        <div class="manip-photo">
+          <img src="assets/morgana.png" alt="Retrato usado no dossiê de Morgana">
+          <div class="photo-scan"></div>
+          <span class="photo-label">REGISTRO VISUAL · M-001</span>
+        </div>
+        <div class="manip-copy">
+          <div class="order-line">ORDEM DA MANIPULAÇÃO <span>AZUL PROFUNDO</span></div>
+          <h2>MOR<br><span>GANA</span></h2>
+          <p class="subtitle">a primeira voz · a presença que chega antes da decisão</p>
+          <p class="lead">Morgana não precisa dominar uma sala. Basta reorganizar aquilo que cada pessoa acredita ter escolhido sozinha.</p>
+          <div class="manip-grid">
+            <div><b>FUNÇÃO</b><p>Influência, diplomacia, leitura social e controle de narrativas.</p></div>
+            <div><b>MÉTODO</b><p>Precisão. Tempo é recurso; pressa é ruído.</p></div>
+            <div><b>RISCO</b><p>Você pode sair convencido de que a ideia sempre foi sua.</p></div>
+            <div><b>ARQUIVO</b><p>Origem e idade permanecem deliberadamente opacas.</p></div>
+          </div>
+          <div class="quote">“A melhor manipulação não muda sua resposta. Muda a pergunta que você pensa estar respondendo.”</div>
+          <div class="record-actions"><button class="track-btn" data-src="musicas/manipulacao.mp3" data-title="Morgana · Crucificado ao Contrário" type="button"><span>▶</span> TOCAR TRILHA</button><a class="dossier-link" href="morgana.html">ABRIR DOSSIÊ COMPLETO →</a></div>
+        </div>
+        <div class="manip-notes" aria-hidden="true">
+          <span class="note n1">não confundir silêncio com ausência</span>
+          <span class="note n2">24 anos?</span>
+          <span class="note n3">ela já sabia.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 MEDO -->
+    <section class="priest priest--fear" id="medo" data-accent="#ff263d">
+      <div class="section-index">02 / 05</div>
+      <div class="fear-shell reveal">
+        <div class="fear-head">
+          <span>CONTRATO Nº OPN-000</span><span>CONSEQUÊNCIA · INCERTEZA</span><span>STATUS: ATIVO</span>
+        </div>
+        <div class="fear-body">
+          <div class="fear-portrait">
+            <div class="hazard-ring"></div>
+            <img src="assets/astaroth.png" alt="Retrato usado no dossiê de Astaroth">
+            <div class="fear-stamp">NADA<br>DURA</div>
+          </div>
+          <div class="fear-copy">
+            <small>ORDEM DO MEDO · A MÃO DO CULTO</small>
+            <h2>ASTAROTH</h2>
+            <p class="fear-manifesto">O medo não está no valor cobrado. Está no espaço entre a escolha e a consequência — quando você sabe que algo virá, mas ainda não sabe o quê.</p>
+            <div class="clauses">
+              <div><em>01</em><p>Não abandona uma missão depois de aceitá-la.</p></div>
+              <div><em>02</em><p>Lê pessoas como outros leem contratos.</p></div>
+              <div><em>03</em><p>Favores criam consequências, não equivalências simples.</p></div>
+              <div><em>04</em><p>O silêncio dele não é falta de resposta. É cálculo.</p></div>
+            </div>
+            <div class="record-actions"><button class="track-btn fear-track" data-src="musicas/medo.mp3" data-title="Astaroth · Dreamcore" type="button"><span>▶</span> EXECUTAR TRILHA</button><a class="dossier-link fear-link" href="astaroth.html">ABRIR CONTRATO COMPLETO →</a></div>
+          </div>
+        </div>
+        <div class="fear-footer">ASSINATURA NÃO EXIGIDA · SUA PARTICIPAÇÃO JÁ FOI REGISTRADA</div>
+      </div>
+    </section>
+
+    <!-- 03 ALEGRIA -->
+    <section class="priest priest--joy" id="alegria" data-accent="#ffd23e">
+      <div class="section-index">03 / 05</div>
+      <div class="joy-stage reveal">
+        <div class="joy-banner">✦ HOJE TEM FESTA ✦ HOJE TEM FESTA ✦ HOJE TEM FESTA ✦</div>
+        <div class="joy-main">
+          <div class="joy-visual">
+            <img src="assets/caramela.png" alt="Retrato usado no dossiê de Caramela">
+            <div class="joy-photo-frame"></div>
+            <div class="ticket">REGISTRO VISUAL<br><b>CARAMELA</b></div>
+            <div class="confetti c1">★</div><div class="confetti c2">✦</div><div class="confetti c3">●</div><div class="confetti c4">♥</div>
+          </div>
+          <div class="joy-copy">
+            <span class="joy-kicker">ORDEM DA ALEGRIA · AMARELO SOLAR</span>
+            <h2>CARAMELA!</h2>
+            <p class="joy-sub">recrutamento, acolhimento, celebração e o estranho talento de fazer o peso parecer suportável.</p>
+            <div class="joy-columns">
+              <p><b>O que parece:</b><br>uma festa, uma conversa, um doce colocado ao lado de alguém que precisava dele.</p>
+              <p><b>O que é:</b><br>uma das formas mais eficientes de transformar estranhos em pessoas que desejam ficar.</p>
+            </div>
+            <div class="joy-pills"><span>CARISMA</span><span>EVENTOS</span><span>VÍNCULOS</span><span>CAOS SOCIAL</span></div>
+            <div class="record-actions"><button class="track-btn joy-track" data-src="musicas/alegria.mp3" data-title="Caramela · The One Who's Running the Show" type="button"><span>▶</span> COMEÇAR A FESTA</button><a class="dossier-link joy-link" href="caramela.html">ENTRAR NO ARQUIVO DELA →</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 SOLIDÃO -->
+    <section class="priest priest--alone" id="solidao" data-accent="#8c67ff">
+      <div class="section-index">04 / 05</div>
+      <div class="alone-field reveal">
+        <div class="alone-gridlines"></div>
+        <div class="alone-sidebar">
+          <span>ORDO SOLITUDINIS</span>
+          <b>04</b>
+          <p>arquivo recuperado de um lugar onde ninguém deveria ter estado.</p>
+        </div>
+        <div class="alone-copy">
+          <small>OBSERVAÇÃO · RECONHECIMENTO · ESTRATÉGIA</small>
+          <h2>BAAL</h2>
+          <p>Ele prefere conhecer o mundo sem permitir que o mundo o conheça. A Solidão, para Baal, não é ausência: é distância suficiente para enxergar o desenho inteiro.</p>
+          <div class="alone-rule"></div>
+          <blockquote>“Se você percebeu que estava sendo observado, provavelmente ele já terminou.”</blockquote>
+          <div class="alone-data"><span>PERFIL: observador</span><span>FOCO: mistérios</span><span>ESTADO: não localizado</span></div>
+          <div class="record-actions"><button class="track-btn alone-track" data-src="musicas/solidao.mp3" data-title="Baal · Vanitas (Memórias de Vanitas) Se Essa Lua Fosse Minha | Oshadow" type="button"><span>▶</span> ABRIR REGISTRO SONORO</button><a class="dossier-link alone-link" href="baal.html">LOCALIZAR DOSSIÊ →</a></div>
+        </div>
+        <div class="alone-visual missing-photo">
+          <div class="eye-dot"></div>
+          <span>IMAGEM<br>NÃO CATALOGADA</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 SILÊNCIO -->
+    <section class="priest priest--silence" id="silencio" data-accent="#f0a8c6">
+      <div class="section-index">05 / 05</div>
+      <div class="silence-paper reveal">
+        <div class="silence-margin"><span>Ⅴ</span><small>ORDEM DO SILÊNCIO</small></div>
+        <div class="silence-copy">
+          <div class="verdict-line"><span>JULGAMENTO INTERNO</span><b>SEM RUÍDO</b></div>
+          <h2>BELZEBU</h2>
+          <p class="silence-title">A PURA · SACERDOTE DO SILÊNCIO</p>
+          <p class="silence-lead">Ele não procura a resposta que encerra um caso mais rápido. Procura aquela que ainda permanece de pé depois que todas as certezas fáceis foram desmontadas.</p>
+          <div class="evidence">
+            <div><b>I</b><span>Ouça antes de decidir.</span></div>
+            <div><b>II</b><span>Separe consequência de vingança.</span></div>
+            <div><b>III</b><span>Se ainda não sabe, diga que não sabe.</span></div>
+          </div>
+          <blockquote>“Quando achar que já entendeu, escute mais uma vez.”</blockquote>
+          <div class="record-actions"><button class="track-btn pending silence-track" disabled type="button"><span>×</span> TRILHA AINDA NÃO ANEXADA</button><a class="dossier-link silence-link" href="belzebu.html">LER JULGAMENTO COMPLETO →</a></div>
+        </div>
+        <div class="silence-visual"><img class="silence-photo" src="assets/belzebu.png" alt="Retrato de Belzebu"></div>
+        <div class="pure-stamp">A PURA</div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <span>FIM DOS REGISTROS LIBERADOS</span>
+      <h2>CINCO ORDENS.<br>CINCO FORMAS DE <i>DECIDIR.</i></h2>
+      <a href="index.html">VOLTAR AO ARQUIVO PRINCIPAL →</a>
+    </section>
+  </main>
+
+  <aside class="player" id="player" aria-live="polite">
+    <div class="player-orb"><span id="playerIcon">▶</span></div>
+    <div class="player-meta"><small>TRILHA DO REGISTRO</small><b id="playerTitle">nenhuma trilha selecionada</b><div class="progress"><i id="progressBar"></i></div></div>
+    <span class="time" id="playerTime">0:00 / 0:00</span>
+    <button id="playerToggle" type="button">▶</button>
+    <button id="playerMute" type="button">VOL 35%</button>
+  </aside>
+
+  <audio id="audio" preload="metadata"></audio>
+  <script src="sacerdotes.js"></script>
+</body>
+</html>
